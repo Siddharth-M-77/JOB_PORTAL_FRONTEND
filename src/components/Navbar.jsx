@@ -6,10 +6,13 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Button } from "./ui/button";
+import { LuLogOut } from "react-icons/lu";
+import { ImProfile } from "react-icons/im";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(true);
-  const [user] = useState(true); // change this value to true to simulate user being logged in
+  const [user] = useState(false); // change this value to true to simulate user being logged in
 
   return (
     <nav className="bg-white shadow-lg">
@@ -71,7 +74,37 @@ const Navbar = () => {
                       <AvatarFallback>U</AvatarFallback>
                     </Avatar>
                   </PopoverTrigger>
-                  <PopoverContent>heyy</PopoverContent>
+                  <PopoverContent className="w-80">
+                    <div className="flex gap-8 cursor-pointer items-center">
+                      <Avatar>
+                        <AvatarImage
+                          src="https://github.com/shadcn.png"
+                          alt="User Avatar"
+                        />
+                      </Avatar>
+                      <div>
+                        <h4>Siddharth</h4>
+                        <p className="text-sm opacity-60">
+                          I am a MERN developer
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-col gap-4 mt-4">
+                      <div className="flex items-center">
+                        <ImProfile />
+                        <Button variant="link" className="text-xl">
+                          View Profile
+                        </Button>
+                      </div>
+                      <div className="flex items-center">
+                        <LuLogOut />
+
+                        <Button variant="link" className="text-xl">
+                          Logout
+                        </Button>
+                      </div>
+                    </div>
+                  </PopoverContent>
                 </Popover>
               </div>
             )}
@@ -161,11 +194,22 @@ const Navbar = () => {
                       src="https://github.com/shadcn.png"
                       alt="User Avatar"
                     />
-                    <AvatarFallback>U</AvatarFallback>
                   </Avatar>
                 </PopoverTrigger>
-                <PopoverContent>
-                 
+                <PopoverContent className="w-80">
+                  <div className="flex gap-4 space-y-4">
+                    <Avatar>
+                      <AvatarImage
+                        src="https://github.com/shadcn.png"
+                        alt="User Avatar"
+                      />
+                    </Avatar>
+                    <div className="flex items-center">
+                      <Button variant="link" className="text-xl">
+                        View Profile
+                      </Button>
+                    </div>
+                  </div>
                 </PopoverContent>
               </Popover>
             </div>
