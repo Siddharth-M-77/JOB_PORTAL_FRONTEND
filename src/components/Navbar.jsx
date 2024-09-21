@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
@@ -9,11 +9,36 @@ import {
 import { Button } from "./ui/button";
 import { LuLogOut } from "react-icons/lu";
 import { ImProfile } from "react-icons/im";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const [user] = useState(false); // change this value to true to simulate user being logged in
+  const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(true); // Change this value to false to simulate logged-out state
+  const navigate = useNavigate();
 
+  // Logout function
+  const handleLogout = async () => {
+    try {
+      // Send a request to your backend's logout endpoint
+      console.log("clicked")
+      const response = await axios.get(
+        "https://job-portal-backend-af56.onrender.com/api/v1/user/logout",
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, // Send cookies 
+        }
+      );
+      if (response.data.success) {
+        localStorage.removeItem("token"); // Adjust based on your token key
+        setUser(false);
+        toast.success("Logged out successfully!"); 
+        navigate("/login"); 
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Logout failed!");
+    }
+  };
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,7 +46,7 @@ const Navbar = () => {
           {/* Logo Section */}
           <div className="flex-shrink-0 flex items-center">
             <h1 className="text-3xl font-extrabold">
-              JOb <span className="text-rose-700">HUB</span>
+              Job <span className="text-rose-700">HUB</span>
             </h1>
           </div>
 
@@ -71,7 +96,6 @@ const Navbar = () => {
                         src="https://github.com/shadcn.png"
                         alt="User Avatar"
                       />
-                      <AvatarFallback>U</AvatarFallback>
                     </Avatar>
                   </PopoverTrigger>
                   <PopoverContent className="w-80">
@@ -98,8 +122,11 @@ const Navbar = () => {
                       </div>
                       <div className="flex items-center">
                         <LuLogOut />
-
-                        <Button variant="link" className="text-xl">
+                        <Button
+                          variant="link"
+                          className="text-xl"
+                          onClick={handleLogout}
+                        >
                           Logout
                         </Button>
                       </div>
@@ -209,6 +236,13 @@ const Navbar = () => {
                         View Profile
                       </Button>
                     </div>
+                    <Button
+                      variant="link"
+                      className="text-xl"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </Button>
                   </div>
                 </PopoverContent>
               </Popover>

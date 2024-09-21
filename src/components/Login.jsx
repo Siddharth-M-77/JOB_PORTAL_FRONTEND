@@ -78,12 +78,15 @@ const LoginPage = () => {
           >
             Sign Up
           </button>
+          <div className="flex items-center justify-between">
           <p className="text-sm">
             Dont't have an account?
             <span className="text-blue-600 hover:cursor-pointer">
               <Link to="/signup">Signup</Link>
             </span>
           </p>
+          <Link to="/forget-password" className="text-sm font-bold text-red-600 capitalize font-serif">Forgot your Password</Link>
+          </div>
         </form>
       </div>
     </div>
