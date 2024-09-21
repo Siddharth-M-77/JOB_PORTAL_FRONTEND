@@ -2,10 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "sonner";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const RegisterPage = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -29,18 +29,23 @@ const RegisterPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/register",
+        "https://job-portal-backend-af56.onrender.com/api/v1/user/register",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            withCredentials: true, // Include credentials (like cookies)
+          },
+        }
       );
       if (response.data.success) {
-        toast.success(response.data.message);
+        toast.success(response?.data?.message);
         navigate("/login");
       }
 
       reset(); // Reset the form after submission
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -139,6 +144,12 @@ const RegisterPage = () => {
           >
             Sign Up
           </button>
+          <p className="text-sm">
+            Already have an account?
+            <span className="text-blue-600 hover:cursor-pointer">
+              <Link to="/login">Login</Link>
+            </span>
+          </p>
         </form>
       </div>
     </div>

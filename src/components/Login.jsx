@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "sonner";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -21,18 +21,22 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/user/login",
+        "https://job-portal-backend-af56.onrender.com/api/v1/user/login",
         formData,
-        { headers: { "Content-Type": "application/json" } }
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true, // Include credentials (like cookies)
+        }
       );
+      
       if (response.data.success) {
         toast.success(response.data.message);
         navigate("/");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || "An error occurred");
     }
-  };
+  }
 
   return (
     <div className="min-h-screen  flex items-center justify-center bg-white shadow-lg p-6">
@@ -41,8 +45,6 @@ const LoginPage = () => {
           Log <span className="text-orange-600 ">In</span>
         </h1>
         <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
-         
-
           {/* Email */}
           <div>
             <label className="block text-gray-700">Email</label>
@@ -69,7 +71,6 @@ const LoginPage = () => {
             )}
           </div>
 
-         
           {/* Submit Button */}
           <button
             type="submit"
@@ -77,6 +78,12 @@ const LoginPage = () => {
           >
             Sign Up
           </button>
+          <p className="text-sm">
+            Dont't have an account?
+            <span className="text-blue-600 hover:cursor-pointer">
+              <Link to="/signup">Signup</Link>
+            </span>
+          </p>
         </form>
       </div>
     </div>
