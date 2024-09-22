@@ -37,7 +37,6 @@ const LoginPage = () => {
       );
       
       if (response.data.success) {
-        console.log(response.data)
         toast.success(response.data.message);
         dispatch(setUser(response.data.existingUser))
         navigate("/");
