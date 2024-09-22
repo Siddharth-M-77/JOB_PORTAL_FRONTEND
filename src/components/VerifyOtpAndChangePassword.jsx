@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 const ResetPassword = () => {
@@ -94,6 +94,7 @@ const ResetPassword = () => {
         >
           Reset Password
         </button>
+        <Link to='/forget-password' className="text-red-700 underline inline-block mt-4 text-center w-full">Back to Generate Link</Link>
       </form>
     </div>
   );

@@ -3,8 +3,15 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
+import { USER_API_END_POINT } from "@/utils/constant.js";
+import { setLoading, setUser } from '@/redux/userSlice'
+import { useDispatch, useSelector } from "react-redux";
+
 
 const LoginPage = () => {
+  const dispatch = useDispatch();
+  const { loading,user } = useSelector(store => store.user);
+
   const navigate = useNavigate();
   const {
     register,
@@ -21,7 +28,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "https://job-portal-backend-af56.onrender.com/api/v1/user/login",
+        `${USER_API_END_POINT}/login`,
         formData,
         {
           headers: { "Content-Type": "application/json" },
@@ -30,7 +37,9 @@ const LoginPage = () => {
       );
       
       if (response.data.success) {
+        console.log(response.data)
         toast.success(response.data.message);
+        dispatch(setUser(response.data.existingUser))
         navigate("/");
       }
     } catch (error) {

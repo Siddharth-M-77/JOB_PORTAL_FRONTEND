@@ -11,29 +11,34 @@ import { LuLogOut } from "react-icons/lu";
 import { ImProfile } from "react-icons/im";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "@/redux/userSlice";
 
 const Navbar = () => {
+  const { user } = useSelector((store) => store.user);
+  const dispatch = useDispatch();
+  console.log(user);
+  console.log(user.profile.profilePhoto);
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState(true); // Change this value to false to simulate logged-out state
+
   const navigate = useNavigate();
 
   // Logout function
   const handleLogout = async () => {
     try {
       // Send a request to your backend's logout endpoint
-      console.log("clicked")
+      console.log("clicked");
       const response = await axios.get(
         "https://job-portal-backend-af56.onrender.com/api/v1/user/logout",
         {
           headers: { "Content-Type": "application/json" },
-          withCredentials: true, // Send cookies 
+          withCredentials: true, // Send cookies
         }
       );
       if (response.data.success) {
-        localStorage.removeItem("token"); // Adjust based on your token key
-        setUser(false);
-        toast.success("Logged out successfully!"); 
-        navigate("/login"); 
+        toast.success("Logged out successfully!");
+        dispatch(setUser(null));
+        navigate("/login");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "Logout failed!");
@@ -93,8 +98,8 @@ const Navbar = () => {
                   <PopoverTrigger>
                     <Avatar>
                       <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="User Avatar"
+                        src={user?.profile?.profilePhoto}
+                        alt="USER"
                       />
                     </Avatar>
                   </PopoverTrigger>
@@ -102,15 +107,13 @@ const Navbar = () => {
                     <div className="flex gap-8 cursor-pointer items-center">
                       <Avatar>
                         <AvatarImage
-                          src="https://github.com/shadcn.png"
+                          src={user?.profile?.profilePhoto}
                           alt="User Avatar"
                         />
                       </Avatar>
                       <div>
-                        <h4>Siddharth</h4>
-                        <p className="text-sm opacity-60">
-                          I am a MERN developer
-                        </p>
+                        <h4>{user?.fullName}</h4>
+                        <p className="text-sm opacity-60">{user?.bio}</p>
                       </div>
                     </div>
                     <div className="flex flex-col gap-4 mt-4">
@@ -218,7 +221,7 @@ const Navbar = () => {
                 <PopoverTrigger>
                   <Avatar>
                     <AvatarImage
-                      src="https://github.com/shadcn.png"
+                      src={user?.profile?.profilePhoto}
                       alt="User Avatar"
                     />
                   </Avatar>
@@ -227,8 +230,8 @@ const Navbar = () => {
                   <div className="flex gap-4 space-y-4">
                     <Avatar>
                       <AvatarImage
-                        src="https://github.com/shadcn.png"
-                        alt="User Avatar"
+                        src={user?.profile?.profilePhoto}
+                        alt="User "
                       />
                     </Avatar>
                     <div className="flex items-center">

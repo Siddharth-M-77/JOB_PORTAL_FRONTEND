@@ -2,9 +2,16 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "sonner";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Button } from "./ui/button";
+import { Loader2 } from "lucide-react";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 const RegisterPage = () => {
+  const { loading,user } = useSelector(store => store.user);
+  console.log(loading,user)
+  
   const navigate = useNavigate();
   const {
     register,
@@ -29,7 +36,7 @@ const RegisterPage = () => {
 
     try {
       const response = await axios.post(
-        "https://job-portal-backend-af56.onrender.com/api/v1/user/register",
+      `${USER_API_END_POINT}/register`,
         formData,
         {
           headers: {
@@ -137,13 +144,15 @@ const RegisterPage = () => {
             )}
           </div>
 
-          {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
-          >
-            Sign Up
-          </button>
+          {loading ? (
+            <Button className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait..
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Signup
+            </Button>
+          )}
           <p className="text-sm">
             Already have an account?
             <span className="text-blue-600 hover:cursor-pointer">
