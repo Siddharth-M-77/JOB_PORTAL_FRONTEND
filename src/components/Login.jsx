@@ -28,6 +28,8 @@ const LoginPage = () => {
     formData.append("password", data.password);
 
     try {
+      dispatch(setLoading(true));
+
       const response = await axios.post(
         `${USER_API_END_POINT}/login`,
         formData,
@@ -38,9 +40,9 @@ const LoginPage = () => {
       );
 
       if (response.data.success) {
-        toast.success(response.data.message);
-        dispatch(setUser(response.data.existingUser));
+        dispatch(setUser(response.data.user));
         navigate("/");
+        toast.success(response.data.message);
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");

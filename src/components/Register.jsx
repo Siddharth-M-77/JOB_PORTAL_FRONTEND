@@ -3,15 +3,17 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
 import { Loader2 } from "lucide-react";
 import { USER_API_END_POINT } from "@/utils/constant";
+import { setLoading } from '@/redux/userSlice'
 
 const RegisterPage = () => {
-  const { loading,user } = useSelector(store => store.user);
-  console.log(loading,user)
-  
+  const { loading, user } = useSelector((store) => store.user);
+  const dispatch = useDispatch()
+  // console.log(loading, user);
+
   const navigate = useNavigate();
   const {
     register,
@@ -35,8 +37,10 @@ const RegisterPage = () => {
     formData.append("profilePhoto", data.profilePhoto[0]); // Correct file reference
 
     try {
+        dispatch(setLoading(true));
+
       const response = await axios.post(
-      `${USER_API_END_POINT}/register`,
+        `${USER_API_END_POINT}/register`,
         formData,
         {
           headers: {
@@ -53,6 +57,9 @@ const RegisterPage = () => {
       reset(); // Reset the form after submission
     } catch (error) {
       toast.error(error?.response?.data?.message);
+    }
+    finally{
+      dispatch(setLoading(false))
     }
   };
 
