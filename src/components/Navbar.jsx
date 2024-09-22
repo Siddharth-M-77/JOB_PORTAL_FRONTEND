@@ -16,6 +16,7 @@ import { setUser } from "@/redux/userSlice";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.user);
+  // console.log(user.fullName)
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +27,6 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       // Send a request to your backend's logout endpoint
-      console.log("clicked");
       const response = await axios.get(
         "https://job-portal-backend-af56.onrender.com/api/v1/user/logout",
         {

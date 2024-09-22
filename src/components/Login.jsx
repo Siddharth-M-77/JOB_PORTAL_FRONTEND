@@ -11,7 +11,7 @@ import { Button } from "./ui/button";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { loading, user } = useSelector((store) => store.user);
+  const { loading} = useSelector((store) => store.user);
 
   const navigate = useNavigate();
   const {
@@ -40,7 +40,7 @@ const LoginPage = () => {
       );
 
       if (response.data.success) {
-        dispatch(setUser(response.data.user));
+        dispatch(setUser(response.data.existingUser));
         navigate("/");
         toast.success(response.data.message);
       }
