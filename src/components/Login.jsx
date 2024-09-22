@@ -4,13 +4,13 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { USER_API_END_POINT } from "@/utils/constant.js";
-import { setLoading, setUser } from '@/redux/userSlice'
+import { setLoading, setUser } from "@/redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-
+import { Loader2 } from "lucide-react";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
-  const { loading,user } = useSelector(store => store.user);
+  const { loading, user } = useSelector((store) => store.user);
 
   const navigate = useNavigate();
   const {
@@ -35,16 +35,18 @@ const LoginPage = () => {
           withCredentials: true, // Include credentials (like cookies)
         }
       );
-      
+
       if (response.data.success) {
         toast.success(response.data.message);
-        dispatch(setUser(response.data.existingUser))
+        dispatch(setUser(response.data.existingUser));
         navigate("/");
       }
     } catch (error) {
       toast.error(error.response?.data?.message || "An error occurred");
+    } finally {
+      dispatch(setLoading(false));
     }
-  }
+  };
 
   return (
     <div className="min-h-screen  flex items-center justify-center bg-white shadow-lg p-6">
@@ -80,20 +82,28 @@ const LoginPage = () => {
           </div>
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
-          >
-            Sign Up
-          </button>
+          {loading ? (
+            <Button className="w-full my-4">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait...
+            </Button>
+          ) : (
+            <Button type="submit" className="w-full my-4">
+              Login
+            </Button>
+          )}
           <div className="flex items-center justify-between">
-          <p className="text-sm">
-            Dont't have an account?
-            <span className="text-blue-600 hover:cursor-pointer">
-              <Link to="/signup">Signup</Link>
-            </span>
-          </p>
-          <Link to="/forget-password" className="text-sm font-bold text-red-600 capitalize font-serif">Forgot your Password</Link>
+            <p className="text-sm">
+              Dont't have an account?
+              <span className="text-blue-600 hover:cursor-pointer">
+                <Link to="/signup">Signup</Link>
+              </span>
+            </p>
+            <Link
+              to="/forget-password"
+              className="text-sm font-bold text-red-600 capitalize font-serif"
+            >
+              Forgot your Password
+            </Link>
           </div>
         </form>
       </div>
