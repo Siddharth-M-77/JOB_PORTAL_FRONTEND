@@ -17,7 +17,7 @@ const CompanyCreate = () => {
   const registerNewCompany = async () => {
     try {
       const res = await axios.post(
-        `${COMPANY_API_END_POINT}/register`,
+        `https://job-portal-backend-af56.onrender.com/api/v1/company/register`,
         { companyName },
         {
           headers: {
@@ -25,20 +25,17 @@ const CompanyCreate = () => {
           },
           withCredentials: true,
         }
-    
       );
-      console.log(res);
       if (res?.data?.success) {
-
         dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
-        console.log(res?.data?.company?._id)
         const companyId = res?.data?.company?._id;
         navigate(`/admin/companies/${companyId}`);
       }
     } catch (error) {
-      console.log(error);
+      console.log("Create company error", error);
     }
+    console.log(res);
   };
   return (
     <div>

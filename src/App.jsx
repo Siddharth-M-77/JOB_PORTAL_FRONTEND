@@ -8,6 +8,7 @@ import ResetPassword from "./components/VerifyOtpAndChangePassword";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CompanyCreate from "./components/admin/CreateCompany";
 import Footer from "./components/Footer";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 const App = () => {
   return (
     <Router>
@@ -19,7 +20,14 @@ const App = () => {
         <Route path="/signup" element={<RegisterPage />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/verify-otp-reset-password" element={<ResetPassword />} />
-        <Route path="/admin/companies/create" element={<CompanyCreate />} />
+        <Route
+          path="/admin/companies/create"
+          element={
+            <ProtectedRoute>
+              <CompanyCreate />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </Router>
