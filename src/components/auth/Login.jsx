@@ -7,7 +7,7 @@ import { USER_API_END_POINT } from "@/utils/constant.js";
 import { setLoading, setUser } from "@/redux/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 const LoginPage = () => {
   const dispatch = useDispatch();

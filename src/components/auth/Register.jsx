@@ -4,7 +4,7 @@ import axios from "axios";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Loader2 } from "lucide-react";
 import { USER_API_END_POINT } from "@/utils/constant";
 import { setLoading } from '@/redux/userSlice'
