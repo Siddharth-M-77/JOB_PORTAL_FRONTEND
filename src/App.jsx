@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/shared-component/Navbar";
 import Home from "./components/Home";
 import RegisterPage from "./components/auth/Register";
 import LoginPage from "./components/auth/Login";
@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CompanyCreate from "./components/admin/CreateCompany";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import PostJob from "./components/admin/Job_create";
 const App = () => {
   return (
     <Router>
@@ -28,6 +29,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/job/create" element={<ProtectedRoute><PostJob /></ProtectedRoute>} />
       </Routes>
       <Footer />
     </Router>

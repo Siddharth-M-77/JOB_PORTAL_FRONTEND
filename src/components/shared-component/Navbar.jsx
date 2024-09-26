@@ -13,6 +13,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "@/redux/userSlice";
+import { USER_API_END_POINT } from "@/utils/constant";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.user);
@@ -24,25 +25,29 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // Logout function
-  const handleLogout = async () => {
-    try {
-      // Send a request to your backend's logout endpoint
-      const response = await axios.get(
-        "https://job-portal-backend-af56.onrender.com/api/v1/user/logout",
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true, // Send cookies
-        }
-      );
-      if (response.data.success) {
-        toast.success("Logged out successfully!");
-        dispatch(setUser(null));
-        navigate("/login");
+  // Logout function
+const handleLogout = async () => {
+  try {
+    const response = await axios.get(
+      `${ USER_API_END_POINT}/logout`, 
+      {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true, // Send cookies
       }
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Logout failed!");
+    );
+
+    // Check if the response is successful
+    if (response.data.success) {
+      toast.success("Logged out successfully!");
+      dispatch(setUser(null)); // Reset the user in Redux state
+      navigate("/login"); // Redirect to login page
     }
-  };
+    
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Logout failed!");
+  }
+};
+
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,11 +130,12 @@ const Navbar = () => {
                       </div>
                       <div className="flex items-center">
                         <LuLogOut />
-                        <Button
+                        <Button 
                           variant="link"
                           className="text-xl"
                           onClick={handleLogout}
                         >
+                          
                           Logout
                         </Button>
                       </div>
