@@ -32,8 +32,9 @@ console.log('JWT Token:', token); // This will log your token
       if (res?.data?.success) {
         dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
+        console.log(res.data.message)
         const companyId = res?.data?.company?._id;
-        // console.log(companyId);
+        console.log(companyId);
         // navigate(`/admin/companies/${companyId}`);
       }
     } catch (error) {

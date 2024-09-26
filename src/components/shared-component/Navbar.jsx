@@ -26,35 +26,33 @@ const Navbar = () => {
 
   // Logout function
   // Logout function
-const handleLogout = async () => {
-  try {
-    const response = await axios.get(
-      `${ USER_API_END_POINT}/logout`, 
-      {
+  const handleLogout = async () => {
+    try {
+      const response = await axios.get(`${USER_API_END_POINT}/logout`, {
         headers: { "Content-Type": "application/json" },
         withCredentials: true, // Send cookies
-      }
-    );
+      });
 
-    // Check if the response is successful
-    if (response.data.success) {
-      toast.success("Logged out successfully!");
-      dispatch(setUser(null)); // Reset the user in Redux state
-      navigate("/login"); // Redirect to login page
+      // Check if the response is successful
+      if (response.data.success) {
+        toast.success("Logged out successfully!");
+        dispatch(setUser(null)); // Reset the user in Redux state
+        navigate("/login"); // Redirect to login page
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Logout failed!");
     }
-    
-  } catch (error) {
-    toast.error(error.response?.data?.message || "Logout failed!");
-  }
-};
+  };
 
   return (
     <nav className="bg-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo Section */}
-          <div className="flex items-center jusc-
-          ">
+          <div
+            className="flex items-center jusc-
+          "
+          >
             <h1 className="text-3xl font-extrabold flex">
               Job <span className="text-rose-700">HUB</span>
             </h1>
@@ -130,12 +128,11 @@ const handleLogout = async () => {
                       </div>
                       <div className="flex items-center">
                         <LuLogOut />
-                        <Button 
+                        <Button
                           variant="link"
                           className="text-xl"
                           onClick={handleLogout}
                         >
-                          
                           Logout
                         </Button>
                       </div>
