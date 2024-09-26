@@ -21,7 +21,6 @@ const Home = () => {
       <HeroSection />
       <CategoryCarousel />
       <LatestJobs />
-      <Footer />
     </div>
   );
 };

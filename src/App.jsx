@@ -7,7 +7,7 @@ import ForgetPassword from "./components/ForgetPassword";
 import ResetPassword from "./components/VerifyOtpAndChangePassword";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CompanyCreate from "./components/admin/CreateCompany";
-import Footer from "./components/Footer";
+import Footer from "./components/shared-component/Footer";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import PostJob from "./components/admin/Job_create";
 const App = () => {
