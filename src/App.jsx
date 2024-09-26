@@ -10,6 +10,7 @@ import CompanyCreate from "./components/admin/CreateCompany";
 import Footer from "./components/shared-component/Footer";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import PostJob from "./components/admin/Job_create";
+import Jobs from "./components/Jobs";
 const App = () => {
   return (
     <Router>
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/signup" element={<RegisterPage />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/verify-otp-reset-password" element={<ResetPassword />} />
+        <Route path="/job" element={<Jobs />} />
         <Route
           path="/admin/companies/create"
           element={
@@ -29,7 +31,14 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/job/create" element={<ProtectedRoute><PostJob /></ProtectedRoute>} />
+        <Route
+          path="/job/create"
+          element={
+            <ProtectedRoute>
+              <PostJob />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
       <Footer />
     </Router>

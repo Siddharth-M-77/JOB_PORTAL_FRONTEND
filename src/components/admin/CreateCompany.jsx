@@ -28,7 +28,7 @@ const CompanyCreate = () => {
   const registerNewCompany = async (data) => {
     try {
       // Create FormData to handle file uploads
-      
+
       const formData = new FormData();
       formData.append("name", data.companyName);
       formData.append("description", data.description);
@@ -39,16 +39,21 @@ const CompanyCreate = () => {
         formData.append("logo", data.logo[0]); // Get the file from input
       }
 
-      const res = await axios.post(`${COMPANY_API_END_POINT}/register`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data", // Set headers for file upload
-        },
-        withCredentials: true,
-      });
+      const res = await axios.post(
+        `http://localhost:8000/api/v1/company/register`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data", // Set headers for file upload
+          },
+          withCredentials: true,
+        }
+      );
 
       if (res?.data?.success) {
         dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
+        console.log(req.data.company);
         const companyId = res?.data?.company?._id;
         // Navigate to company details page
         navigate(`/admin/companies/${companyId}`);
@@ -69,14 +74,19 @@ const CompanyCreate = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(registerNewCompany)} encType="multipart/form-data">
+        <form
+          onSubmit={handleSubmit(registerNewCompany)}
+          encType="multipart/form-data"
+        >
           <div className="my-4">
             <Label htmlFor="companyName">Company Name</Label>
             <Input
               id="companyName"
               type="text"
               placeholder="JobHunt, Microsoft, etc."
-              {...register("companyName", { required: "Company name is required" })}
+              {...register("companyName", {
+                required: "Company name is required",
+              })}
             />
             {errors.companyName && (
               <p className="text-red-500">{errors.companyName.message}</p>
@@ -89,7 +99,9 @@ const CompanyCreate = () => {
               id="description"
               type="text"
               placeholder="Brief company description"
-              {...register("description", { required: "Description is required" })}
+              {...register("description", {
+                required: "Description is required",
+              })}
             />
             {errors.description && (
               <p className="text-red-500">{errors.description.message}</p>

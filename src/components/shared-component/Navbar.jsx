@@ -70,7 +70,7 @@ const Navbar = () => {
               to="/job"
               className="text-gray-800 hover:text-rose-700 font-medium"
             >
-              Job
+              Jobs
             </Link>
             <Link
               to="/browse"
