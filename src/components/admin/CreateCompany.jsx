@@ -44,7 +44,7 @@ const CompanyCreate = () => {
         formData,
         {
           headers: {
-            "Content-Type": "multipart/form-data", // Set headers for file upload
+            "Content-Type": "multipart/form-data",
           },
           withCredentials: true,
         }
@@ -53,8 +53,8 @@ const CompanyCreate = () => {
       if (res?.data?.success) {
         dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
-        console.log(req.data.company);
         const companyId = res?.data?.company?._id;
+        console.log(companyId)
         // Navigate to company details page
         navigate(`/admin/companies/${companyId}`);
       }

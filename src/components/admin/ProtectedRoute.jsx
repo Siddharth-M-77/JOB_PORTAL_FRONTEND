@@ -7,6 +7,7 @@ const ProtectedRoute = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("User:", user); // Debugging log
     if (!isLoading && (!user || user.role !== "recruiter")) {
       navigate("/login");
     }

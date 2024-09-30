@@ -11,6 +11,7 @@ import Footer from "./components/shared-component/Footer";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 import PostJob from "./components/admin/JobPost";
 import Jobs from "./components/Jobs";
+import Profile from "./components/Profile";
 const App = () => {
   return (
     <Router>
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<RegisterPage />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/verify-otp-reset-password" element={<ResetPassword />} />
         <Route path="/job" element={<Jobs />} />
@@ -39,6 +41,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        {/* 66fae6c7154df623bd0bce7d */}
         <Route
           path="/admin/PostJob"
           element={

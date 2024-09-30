@@ -22,6 +22,7 @@ const PostJob = () => {
     
     const selectChangeHandler = (value) => {
         const selectedCompany = companies.find(company => company.name.toLowerCase() === value);
+        console.log(selectedCompany)
         if (selectedCompany) {
             setValue('companyId', selectedCompany._id);
         }

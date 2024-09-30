@@ -43,7 +43,7 @@ const LoginPage = () => {
 
         // Role-based redirection
         if (user.role === "recruiter") {
-          navigate("/admin/"); // Recruiter page
+          navigate("/admin"); // Recruiter page
         } else if (user.role === "student") {
           navigate("/"); // Normal user page
         }

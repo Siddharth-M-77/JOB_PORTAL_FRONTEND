@@ -122,9 +122,10 @@ const Navbar = () => {
                     <div className="flex flex-col gap-4 mt-4">
                       <div className="flex items-center">
                         <ImProfile />
-                        <Button variant="link" className="text-xl">
+                       <Link to="/profile">
+                       <Button variant="link" className="text-xl">
                           View Profile
-                        </Button>
+                        </Button></Link>
                       </div>
                       <div className="flex items-center">
                         <LuLogOut />
