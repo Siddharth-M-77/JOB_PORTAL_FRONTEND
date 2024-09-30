@@ -3,14 +3,18 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const { user } = useSelector((store) => store.user);
+  const { user, isLoading } = useSelector((store) => store.user);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!user || user.role !== "recruiter") {
+    if (!isLoading && (!user || user.role !== "recruiter")) {
       navigate("/login");
     }
-  }, [user, navigate]); 
+  }, [user, isLoading, navigate]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Show a loading spinner or message while loading user data
+  }
 
   return <>{children}</>;
 };

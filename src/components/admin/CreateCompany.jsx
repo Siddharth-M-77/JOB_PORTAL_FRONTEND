@@ -40,7 +40,7 @@ const CompanyCreate = () => {
       }
 
       const res = await axios.post(
-        `http://localhost:8000/api/v1/company/register`,
+        `${COMPANY_API_END_POINT}/register`,
         formData,
         {
           headers: {

@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import CompanyCreate from "./components/admin/CreateCompany";
 import Footer from "./components/shared-component/Footer";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
-import PostJob from "./components/admin/Job_create";
+import PostJob from "./components/admin/JobPost";
 import Jobs from "./components/Jobs";
 const App = () => {
   return (
@@ -24,6 +24,14 @@ const App = () => {
         <Route path="/verify-otp-reset-password" element={<ResetPassword />} />
         <Route path="/job" element={<Jobs />} />
         <Route
+          path="/admin/job-Post"
+          element={
+            <ProtectedRoute>
+              <PostJob/>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/admin/companies/create"
           element={
             <ProtectedRoute>
@@ -32,7 +40,7 @@ const App = () => {
           }
         />
         <Route
-          path="/job/create"
+          path="/admin/PostJob"
           element={
             <ProtectedRoute>
               <PostJob />
