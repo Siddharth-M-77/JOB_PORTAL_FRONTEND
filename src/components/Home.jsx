@@ -9,6 +9,7 @@ import useGetAllAdminJobs from "@/hooks/useGetAllJobs";
 const Home = () => {
   useGetAllAdminJobs();
   const { user } = useSelector((store) => store.user);
+
   const navigate = useNavigate();
   useEffect(() => {
     if (user?.role === "recruiter") {

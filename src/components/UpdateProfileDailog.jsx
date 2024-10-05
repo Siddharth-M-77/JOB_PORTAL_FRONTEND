@@ -20,7 +20,6 @@ import { setUser } from "@/redux/userSlice";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const { user } = useSelector((store) => store.user);
-  console.log(user?.user?.fullName)
   const dispatch = useDispatch()
 
   const {

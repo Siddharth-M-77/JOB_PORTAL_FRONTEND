@@ -12,7 +12,7 @@ const Profile = () => {
   const isHaveResume = true;
 
   const { user } = useSelector((store) => store.user);
-  console.log(user)
+  // console.log(user)
  
   return (
     <div className="max-w-4xl mx-auto bg-white min-h-[100vh] flex  flex-col justify-start rounded-lg my-5 p-8">
