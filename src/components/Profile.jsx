@@ -12,7 +12,7 @@ const Profile = () => {
   const isHaveResume = true;
 
   const { user } = useSelector((store) => store.user);
-  // console.log(user)
+  console.log(user.fullName)
  
   return (
     <div className="max-w-4xl mx-auto bg-white min-h-[100vh] flex  flex-col justify-start rounded-lg my-5 p-8">
@@ -21,16 +21,16 @@ const Profile = () => {
           <div className="flex gap-2 items-center">
             <div className="logo  w-16 h-16 object-cover rounded-full overflow-hidden">
               <img
-                src={user?.user?.profile?.profilePhoto}
+                src={user?.profile?.profilePhoto}
                 className="w-full h-full "
                 alt=""
               />
             </div>
 
             <div className="">
-              <h1 className="font-extrabold text-xl">{user?.user?.fullName}</h1>
+              <h1 className="font-extrabold text-xl">{user?.fullName}</h1>
               <p className="w-[40vw] opacity-65 text-sm">
-                {user?.user?.profile?.bio}
+                {user?.profile?.bio}
               </p>
             </div>
           </div>
@@ -41,18 +41,18 @@ const Profile = () => {
         <div className="p-6 my-5 ">
           <div className="flex gap-2 items-center justify-start mb-2">
             <Mail />
-            <span>{user?.user?.email}</span>
+            <span>{user?.email}</span>
           </div>
           <div className="flex gap-2 items-center justify-start">
             <Phone />
-            <span>{user?.user?.phoneNumber}</span>
+            <span>{user?.phoneNumber}</span>
           </div>
         </div>
         <div>
           <h1 className="px-6">Skills</h1>
 
-          {user?.user?.profile?.skills?.length > 0 ? (
-            user.user?.profile.skills.map((item, index) => (
+          {user?.profile?.skills?.length > 0 ? (
+            user.profile.skills.map((item, index) => (
               <Badge className="my-2 mr-2" key={index}>
                 <div className="flex p-2 flex-wrap">{item}</div>
               </Badge>

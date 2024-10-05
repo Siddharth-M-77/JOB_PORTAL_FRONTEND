@@ -37,7 +37,8 @@ const LoginPage = () => {
       );
 
       if (response.data.success) {
-        const user = response.data.existingUser;
+        console.log(response.data.user)
+        const user = response.data.user;
         // Save user data in Redux store
         dispatch(setUser(user));
 

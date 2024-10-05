@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux';
 
 const LatestJobs = () => {
     const {allJobs} = useSelector(store=>store.job);
-    // console.log(d)
    
     return (
         <div className='max-w-7xl mx-auto my-20'>

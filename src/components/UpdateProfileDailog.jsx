@@ -20,6 +20,7 @@ import { setUser } from "@/redux/userSlice";
 
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const { user } = useSelector((store) => store.user);
+  // console.log(user.fullName)
   const dispatch = useDispatch()
 
   const {
@@ -29,23 +30,23 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      fullName: user?.user?.fullName || "",
-      email: user?.user?.email || "",
-      phoneNumber: user?.user?.phoneNumber || "",
-      bio: user?.user?.profile?.bio || "",
-      profilePhoto: user?.user?.profile?.profilePhoto || "",
-      skills: user?.user?.profile?.skills?.join(", ") || "",
+      fullName: user?.fullName || "",
+      email: user?.email || "",
+      phoneNumber: user?.phoneNumber || "",
+      bio: user?.profile?.bio || "",
+      profilePhoto: user?.profile?.profilePhoto || "",
+      skills:user?.profile?.skills?.join(", ") || "",
     },
   });
   useEffect(() => {
     if (open) {
       reset({
-        fullName: user?.user?.fullName || "",
-        email: user?.user?.email || "",
-        phoneNumber: user?.user?.phoneNumber || "",
-        bio: user?.user?.profile?.bio || "",
-        profilePhoto: user?.user?.profile?.profilePhoto || "",
-        skills: user?.user?.profile?.skills?.join(", ") || "",
+        fullName: user?.fullName || "",
+        email: user?.email || "",
+        phoneNumber:user?.phoneNumber || "",
+        bio:user?.profile?.bio || "",
+        profilePhoto: user?.profile?.profilePhoto || "",
+        skills:user?.profile?.skills?.join(", ") || "",
       });
     }
   }, [open, user, reset]);
@@ -67,7 +68,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       );
       console.log(res.data.user)
       if (res?.data?.message) {
-        dispatch(setUser(res.data))
+        console.log(res.data.user)
+        dispatch(setUser(res.data.user))
         toast.success(res.data.message);
       }
     } catch (error) {
