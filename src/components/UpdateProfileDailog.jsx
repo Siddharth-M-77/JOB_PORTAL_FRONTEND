@@ -17,11 +17,10 @@ import { USER_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
 import { setUser } from "@/redux/userSlice";
 
-
 const UpdateProfileDialog = ({ open, setOpen }) => {
   const { user } = useSelector((store) => store.user);
   // console.log(user.fullName)
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -35,7 +34,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       phoneNumber: user?.phoneNumber || "",
       bio: user?.profile?.bio || "",
       profilePhoto: user?.profile?.profilePhoto || "",
-      skills:user?.profile?.skills?.join(", ") || "",
+      skills: user?.profile?.skills?.join(", ") || "",
     },
   });
   useEffect(() => {
@@ -43,10 +42,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       reset({
         fullName: user?.fullName || "",
         email: user?.email || "",
-        phoneNumber:user?.phoneNumber || "",
-        bio:user?.profile?.bio || "",
+        phoneNumber: user?.phoneNumber || "",
+        bio: user?.profile?.bio || "",
         profilePhoto: user?.profile?.profilePhoto || "",
-        skills:user?.profile?.skills?.join(", ") || "",
+        skills: user?.profile?.skills?.join(", ") || "",
       });
     }
   }, [open, user, reset]);
@@ -66,10 +65,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
           withCredentials: true,
         }
       );
-      console.log(res.data.user)
+      console.log(res.data.user);
       if (res?.data?.message) {
-        console.log(res.data.user)
-        dispatch(setUser(res.data.user))
+        console.log(res.data.user);
+        dispatch(setUser(res.data.user));
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -161,10 +160,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
 
             {/* bio */}
             <div className="flex items-center gap-4 w-full mb-2 px-6">
-              <Label
-                htmlFor="bio"
-                className="text-right font-bold w-24"
-              >
+              <Label htmlFor="bio" className="text-right font-bold w-24">
                 Bio:
               </Label>
               <Input
@@ -172,7 +168,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 className="w-full"
                 type="text"
                 {...register("bio", {
-                  required: "Enter your bio here.."
+                  required: "Enter your bio here..",
                 })}
                 placeholder="Enter your Bio here..."
               />
@@ -190,7 +186,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 Profile Photo:
               </Label>
               <Input
-              type="file"
+                type="file"
                 id="profilePhoto"
                 className="w-full"
                 {...register("profilePhoto")}

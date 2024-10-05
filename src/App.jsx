@@ -12,6 +12,7 @@ import ProtectedRoute from "./components/admin/ProtectedRoute";
 import PostJob from "./components/admin/JobPost";
 import Jobs from "./components/Jobs";
 import Profile from "./components/Profile";
+import Companies from "./components/admin/Companies";
 const App = () => {
   return (
     <Router>
@@ -25,8 +26,11 @@ const App = () => {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/verify-otp-reset-password" element={<ResetPassword />} />
         <Route path="/job" element={<Jobs />} />
+        <Route path="/admin/companies" element={<ProtectedRoute>
+          <Companies/>
+        </ProtectedRoute>} />
         <Route
-          path="/admin/job-Post"
+          path="/admin/jobPost"
           element={
             <ProtectedRoute>
               <PostJob/>

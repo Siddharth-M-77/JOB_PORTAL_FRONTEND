@@ -53,10 +53,9 @@ const CompanyCreate = () => {
       if (res?.data?.success) {
         dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
+        // Inside the registerNewCompany function
         const companyId = res?.data?.company?._id;
-        console.log(companyId)
-        // Navigate to company details page
-        navigate(`/admin/companies/${companyId}`);
+        navigate(`/admin/jobPost`, { state: { companyId } });
       }
     } catch (error) {
       console.error("Create company error", error);
