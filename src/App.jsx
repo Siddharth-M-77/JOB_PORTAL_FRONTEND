@@ -13,6 +13,7 @@ import PostJob from "./components/admin/JobPost";
 import Jobs from "./components/Jobs";
 import Profile from "./components/Profile";
 import Companies from "./components/admin/Companies";
+import JobDescription from "./components/JobDescription";
 const App = () => {
   return (
     <Router>
@@ -26,14 +27,20 @@ const App = () => {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/verify-otp-reset-password" element={<ResetPassword />} />
         <Route path="/job" element={<Jobs />} />
-        <Route path="/admin/companies" element={<ProtectedRoute>
-          <Companies/>
-        </ProtectedRoute>} />
+        <Route path="/description/:jobId" element={<JobDescription />} />
+        <Route
+          path="/admin/companies"
+          element={
+            <ProtectedRoute>
+              <Companies />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/admin/jobPost"
           element={
             <ProtectedRoute>
-              <PostJob/>
+              <PostJob />
             </ProtectedRoute>
           }
         />

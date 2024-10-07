@@ -6,19 +6,25 @@ import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliesTable from "./AppliesTable";
 import UpdateProfileDailog from "./UpdateProfileDailog";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [open, setOpen] = useState(false);
   const isHaveResume = true;
+  const navigate = useNavigate()
 
   const { user } = useSelector((store) => store.user);
-  console.log(user.fullName)
+  const goBack=()=>{
+    navigate(-1)
+  }
  
   return (
+    <><Button onClick={goBack} className="mt-5 ml-5">↩  Go Back</Button>
     <div className="max-w-4xl mx-auto bg-white min-h-[100vh] flex  flex-col justify-start rounded-lg my-5 p-8">
       <div className="bg-white shadow-lg p-6">
         <div className="flex  gap-8 justify-between p-6">
           <div className="flex gap-2 items-center">
+          
             <div className="logo  w-16 h-16 object-cover rounded-full overflow-hidden">
               <img
                 src={user?.profile?.profilePhoto}
@@ -85,6 +91,7 @@ const Profile = () => {
       </div>
       <UpdateProfileDailog open={open} setOpen={setOpen} />
     </div>
+    </>
   );
 };
 
