@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Button } from "./ui/button";
-import { Mail, Pen, Phone } from "lucide-react";
+import { ArrowLeft, Mail, Pen, Phone } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliesTable from "./AppliesTable";
@@ -19,7 +19,9 @@ const Profile = () => {
   }
  
   return (
-    <><Button onClick={goBack} className="mt-5 ml-5">↩  Go Back</Button>
+    <><Button onClick={goBack} className="mt-6 ml-6 bg-white shadow-xl text-black flex gap-2 hover:text-white">
+    <ArrowLeft/> Go Back
+    </Button>
     <div className="max-w-4xl mx-auto bg-white min-h-[100vh] flex  flex-col justify-start rounded-lg my-5 p-8">
       <div className="bg-white shadow-lg p-6">
         <div className="flex  gap-8 justify-between p-6">

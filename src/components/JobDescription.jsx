@@ -9,6 +9,7 @@ import { setSingleJob } from "@/redux/jobSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { ArrowLeft } from "lucide-react";
 
 const JobDescription = () => {
   const { user } = useSelector((store) => store.user);
@@ -73,8 +74,8 @@ const JobDescription = () => {
     <div className="bg-white shadow-lg">
       <div className="max-w-5xl mx-auto flex h-[71.5vh] items-center flex-col justify-start pt-5">
         <div className="w-full">
-          <Button onClick={goBack} className="mb-4 bg-indigo-600 flex gap">
-            ↩ Go Back
+          <Button onClick={goBack} className="mb-4 bg-white shadow-xl text-black flex gap-2 hover:text-white">
+          <ArrowLeft/> Go Back
           </Button>
 
           <div className="flex items-center justify-between">
