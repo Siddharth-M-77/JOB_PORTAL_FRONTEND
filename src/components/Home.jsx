@@ -17,7 +17,7 @@ const Home = () => {
     }
   }, []);
   return (
-    <div>
+    <div className="max-w-screen-xl overflow-x-hidden mx-auto">
       <HeroSection />
       <CategoryCarousel />
       <LatestJobs />

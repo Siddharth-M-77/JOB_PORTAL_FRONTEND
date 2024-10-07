@@ -52,7 +52,6 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        {/* 66fae6c7154df623bd0bce7d */}
         <Route
           path="/admin/PostJob"
           element={

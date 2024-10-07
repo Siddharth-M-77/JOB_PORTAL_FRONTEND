@@ -17,12 +17,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
 
 const PostJob = () => {
-  const location = useLocation();
-  const { companyId } = location.state || {}; // Destructure companyId from state
-  console.log(companyId)
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { companies } = useSelector((store) => store.company);
@@ -35,32 +31,37 @@ const PostJob = () => {
     formState: { errors },
   } = useForm();
 
+  // Function to handle company selection change
   const selectChangeHandler = (value) => {
     const selectedCompany = companies.find(
       (company) => company.name.toLowerCase() === value
     );
-    console.log(selectedCompany);
     if (selectedCompany) {
-      setValue("companyId", selectedCompany._id);
+      setValue("companyId", selectedCompany._id); // Set the companyId
+      console.log("Company ID set:", selectedCompany._id); // Log for verification
     }
   };
 
   const submitHandler = async (data) => {
+    console.log(data); // Check what data is being submitted
     try {
       setLoading(true);
+
+      // No need to manually include companyId here, it's already set in the form data
       const res = await axios.post(`${JOB_API_END_POINT}/post`, data, {
         headers: {
           "Content-Type": "application/json",
         },
         withCredentials: true,
       });
+
       if (res.data.success) {
-        dispatch();
         toast.success(res.data.message);
         navigate("/admin/jobs");
       }
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage = error.response?.data?.message || "An error occurred";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -206,9 +207,12 @@ const PostJob = () => {
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait
             </Button>
           ) : (
-            <Button type="submit" className="w-full my-4">
-              Post New Job
-            </Button>
+            <div>
+              <input type="hidden" {...register("companyId")} /> {/* Ensure this is registered */}
+              <Button type="submit" className="w-full my-4">
+                Post New Job
+              </Button>
+            </div>
           )}
           {companies.length === 0 && (
             <p className="text-xs text-red-600 font-bold text-center my-3">
