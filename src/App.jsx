@@ -53,7 +53,7 @@ const App = () => {
           }
         />
         <Route
-          path="/admin/PostJob"
+          path="/admin/PostJob/:companyId"
           element={
             <ProtectedRoute>
               <PostJob />

@@ -55,7 +55,7 @@ const CompanyCreate = () => {
         toast.success(res.data.message);
         // Inside the registerNewCompany function
         const companyId = res?.data?.company?._id;
-        navigate(`/admin/jobPost`, { state: { companyId } });
+        navigate(`/admin/PostJob/${companyId}`, { state: { companyId } });
       }
     } catch (error) {
       console.error("Create company error", error);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -14,13 +14,15 @@ import {
 import axios from "axios";
 import { JOB_API_END_POINT } from "@/utils/constant";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 const PostJob = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const params = useParams(); // 
+  const {companyId} = params
   const { companies } = useSelector((store) => store.company);
 
   // Initialize the form with react-hook-form
@@ -31,24 +33,18 @@ const PostJob = () => {
     formState: { errors },
   } = useForm();
 
-  // Function to handle company selection change
-  const selectChangeHandler = (value) => {
-    const selectedCompany = companies.find(
-      (company) => company.name.toLowerCase() === value
-    );
-    if (selectedCompany) {
-      setValue("companyId", selectedCompany._id); // Set the companyId
-      console.log("Company ID set:", selectedCompany._id); // Log for verification
-    }
-  };
-
   const submitHandler = async (data) => {
-    console.log(data); // Check what data is being submitted
     try {
       setLoading(true);
 
-      // No need to manually include companyId here, it's already set in the form data
-      const res = await axios.post(`${JOB_API_END_POINT}/post`, data, {
+      const jobData = {
+        ...data,
+        companyId: companyId, // Ensure that this is set properly
+      };
+
+      console.log("Job Data: ", jobData); // Log jobData to check if companyId is included
+
+      const res = await axios.post(`${JOB_API_END_POINT}/post`, jobData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -56,6 +52,7 @@ const PostJob = () => {
       });
 
       if (res.data.success) {
+        console.log(res.data)
         toast.success(res.data.message);
         navigate("/admin/jobs");
       }
@@ -183,23 +180,35 @@ const PostJob = () => {
               )}
             </div>
             {companies.length > 0 && (
-              <Select onValueChange={selectChangeHandler}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Select a Company" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {companies.map((company) => (
-                      <SelectItem
-                        key={company._id}
-                        value={company.name.toLowerCase()}
-                      >
-                        {company.name}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <div>
+                <Label>Select Company</Label>
+                <Select
+                  onValueChange={(value) => {
+                    const selectedCompany = companies.find(
+                      (company) => company.name.toLowerCase() === value
+                    );
+                    if (selectedCompany) {
+                      setValue("companyId", selectedCompany._id);
+                    }
+                  }}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a Company" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {companies.map((company) => (
+                        <SelectItem
+                          key={company._id}
+                          value={company.name.toLowerCase()}
+                        >
+                          {company.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
             )}
           </div>
           {loading ? (
@@ -208,7 +217,6 @@ const PostJob = () => {
             </Button>
           ) : (
             <div>
-              <input type="hidden" {...register("companyId")} /> {/* Ensure this is registered */}
               <Button type="submit" className="w-full my-4">
                 Post New Job
               </Button>

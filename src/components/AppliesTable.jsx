@@ -24,8 +24,8 @@ const AppliesTable = () => {
         withCredentials: true,
       });
       if (res.data.success) {
-       dispatch(setAllAppliedJobs(res.data.applications)) 
-       console.log(res.data)
+        dispatch(setAllAppliedJobs(res.data.applications));
+        // console.log(res.data);
       }
     };
     fetchAllApliedJobs();
@@ -47,10 +47,14 @@ const AppliesTable = () => {
         <TableBody>
           {allAppliedJobs.map((job, index) => (
             <TableRow key={index}>
-              <TableCell className="font-medium">{new Date(job.date).toLocaleDateString()}</TableCell>
+              <TableCell className="font-medium">
+                {new Date(job.createdAt).toLocaleDateString()}
+              </TableCell>
               <TableCell>{job.job.position}</TableCell>
               <TableCell>{job.job.companyId.name}</TableCell>
-              <TableCell className="text-end bg-black text-white rounded-full inline-block">{job.status}</TableCell>
+              <TableCell className="text-end bg-black text-white rounded-full inline-block">
+                {job.status}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
