@@ -17,7 +17,8 @@ import { USER_API_END_POINT } from "@/utils/constant";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.user);
-  // console.log(user.fullName)
+  const role = user ? (user.role === "recruiter" ? "/admin/job" : "/job") : "/";
+
   const dispatch = useDispatch();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -67,7 +68,7 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              to="/job"
+              to={role}
               className="text-gray-800 hover:text-rose-700 font-medium"
             >
               Jobs
@@ -122,10 +123,11 @@ const Navbar = () => {
                     <div className="flex flex-col gap-4 mt-4">
                       <div className="flex items-center">
                         <ImProfile />
-                       <Link to="/profile">
-                       <Button variant="link" className="text-xl">
-                          View Profile
-                        </Button></Link>
+                        <Link to="/profile">
+                          <Button variant="link" className="text-xl">
+                            View Profile
+                          </Button>
+                        </Link>
                       </div>
                       <div className="flex items-center">
                         <LuLogOut />
