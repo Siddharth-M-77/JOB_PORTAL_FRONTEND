@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -12,21 +12,31 @@ import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import navigate hook
-import useGetAllCompanies from "@/hooks/getAllCompanies"; // Import the custom hook
+import { useNavigate } from "react-router-dom"; 
+import useGetAllCompanies from "@/hooks/getAllCompanies";
 
 const CompaniesTable = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // Hook for navigating to other pages
+  const navigate = useNavigate(); 
   const { companies = [], searchCompanyByText } = useSelector(
     (store) => store.company
   );
-  useGetAllCompanies();
 
-  const filteredCompany = companies.filter((company)=>{
-    
+  const [filteredCompanies, setFilteredCompanies] = useState(companies);
 
-  })
+  useGetAllCompanies(); // Fetch all companies on mount
+
+  useEffect(() => {
+    const filterCompanies = () => {
+      if (!searchCompanyByText) return companies; // If no search term, return all companies
+
+      return companies.filter((company) => 
+        company?.name?.toLowerCase().includes(searchCompanyByText.toLowerCase())
+      );
+    };
+
+    setFilteredCompanies(filterCompanies()); // Update filtered companies
+  }, [companies, searchCompanyByText]);
 
   return (
     <div>
@@ -41,8 +51,8 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {companies.length > 0 ? (
-            companies.map((company) => (
+          {filteredCompanies.length > 0 ? (
+            filteredCompanies.map((company) => (
               <TableRow key={company._id}>
                 <TableCell>
                   <Avatar>
@@ -50,11 +60,8 @@ const CompaniesTable = () => {
                   </Avatar>
                 </TableCell>
                 <TableCell>{company.name}</TableCell>
-                <TableCell>{company.createdAt.split("T")[0]}</TableCell>
-                {/* //.split("T"): Ye method string ko T character ke basis par do
-                parts me baat deta hai. Pehla part date hota hai (e.g.,
-                2024-10-14) aur doosra part time hota hai (e.g., 12:34:56.789Z).
-                [0]: Ye pehla part, yani date, ko access karta hai. */}
+                <TableCell>{new Date(company.createdAt).toLocaleDateString()}</TableCell>
+                {/* Converts ISO string to a more readable date format */}
                 <TableCell className="text-right cursor-pointer">
                   <Popover>
                     <PopoverTrigger>
@@ -62,9 +69,7 @@ const CompaniesTable = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
                       <div
-                        onClick={() =>
-                          navigate(`/admin/companies/${company._id}`)
-                        }
+                        onClick={() => navigate(`/admin/companies/${company._id}`)}
                         className="flex items-center gap-2 w-fit cursor-pointer"
                       >
                         <Edit2 className="w-4" />
@@ -77,7 +82,7 @@ const CompaniesTable = () => {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan="4">No companies available</TableCell>
+              <TableCell colSpan="4" className="text-center">No companies available</TableCell>
             </TableRow>
           )}
         </TableBody>
