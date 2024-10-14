@@ -14,6 +14,7 @@ import Jobs from "./components/Jobs";
 import Profile from "./components/Profile";
 import Companies from "./components/admin/Companies";
 import JobDescription from "./components/JobDescription";
+import AllAdminJob from "./components/admin/allAdminJob";
 const App = () => {
   return (
     <Router>
@@ -33,6 +34,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <Companies />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/job"
+          element={
+            <ProtectedRoute>
+              <AllAdminJob />
             </ProtectedRoute>
           }
         />

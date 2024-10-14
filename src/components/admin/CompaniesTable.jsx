@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   Table,
   TableBody,
@@ -11,15 +11,22 @@ import {
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
-// import { useNavigate } from "react-router-dom";
-import getAllCompanies from "@/hooks/getAllCompanies";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom"; // Import navigate hook
+import useGetAllCompanies from "@/hooks/getAllCompanies"; // Import the custom hook
 
 const CompaniesTable = () => {
-    const {companies} = useSelector(store=>store.company)
-    const company = companies;
-    getAllCompanies()
-   
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // Hook for navigating to other pages
+  const { companies = [], searchCompanyByText } = useSelector(
+    (store) => store.company
+  );
+  useGetAllCompanies();
+
+  const filteredCompany = companies.filter((company)=>{
+    
+
+  })
 
   return (
     <div>
@@ -34,34 +41,45 @@ const CompaniesTable = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-            <tr>
-              <TableCell>
-                <Avatar>
-                  <AvatarImage src={company.logo} />
-                </Avatar>
-              </TableCell>
-              <TableCell>{company.name}</TableCell>
-              <TableCell>{company.createdAt.split("T")[0]}</TableCell>
-              <TableCell className="text-right cursor-pointer">
-                <Popover>
-                  <PopoverTrigger>
-                    <MoreHorizontal />
-                  </PopoverTrigger>
-                  <PopoverContent className="w-32">
-                    <div
-                      onClick={() =>
-                        navigate(`/admin/companies/${company._id}`)
-                      }
-                      className="flex items-center gap-2 w-fit cursor-pointer"
-                    >
-                      <Edit2 className="w-4" />
-                      <span>Edit</span>
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              </TableCell>
-            </tr>
-        
+          {companies.length > 0 ? (
+            companies.map((company) => (
+              <TableRow key={company._id}>
+                <TableCell>
+                  <Avatar>
+                    <AvatarImage src={company.logo} alt={company.name} />
+                  </Avatar>
+                </TableCell>
+                <TableCell>{company.name}</TableCell>
+                <TableCell>{company.createdAt.split("T")[0]}</TableCell>
+                {/* //.split("T"): Ye method string ko T character ke basis par do
+                parts me baat deta hai. Pehla part date hota hai (e.g.,
+                2024-10-14) aur doosra part time hota hai (e.g., 12:34:56.789Z).
+                [0]: Ye pehla part, yani date, ko access karta hai. */}
+                <TableCell className="text-right cursor-pointer">
+                  <Popover>
+                    <PopoverTrigger>
+                      <MoreHorizontal />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-32">
+                      <div
+                        onClick={() =>
+                          navigate(`/admin/companies/${company._id}`)
+                        }
+                        className="flex items-center gap-2 w-fit cursor-pointer"
+                      >
+                        <Edit2 className="w-4" />
+                        <span>Edit</span>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </TableCell>
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan="4">No companies available</TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
     </div>
