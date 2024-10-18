@@ -11,12 +11,11 @@ import {
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Edit2, MoreHorizontal } from "lucide-react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom"; 
 import useGetAllCompanies from "@/hooks/getAllCompanies";
 
 const CompaniesTable = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate(); 
   const { companies = [], searchCompanyByText } = useSelector(
     (store) => store.company
@@ -38,6 +37,11 @@ const CompaniesTable = () => {
     setFilteredCompanies(filterCompanies()); // Update filtered companies
   }, [companies, searchCompanyByText]);
 
+  // Handle company row click to navigate to job post section
+  const handleCompanyClick = (companyId) => {
+    navigate(`/admin/PostJob/${companyId}`); // Redirect to PostJob page with companyId
+  };
+
   return (
     <div>
       <Table>
@@ -53,7 +57,11 @@ const CompaniesTable = () => {
         <TableBody>
           {filteredCompanies.length > 0 ? (
             filteredCompanies.map((company) => (
-              <TableRow key={company._id}>
+              <TableRow
+                key={company._id}
+                onClick={() => handleCompanyClick(company._id)} // Navigate on row click
+                className="cursor-pointer" // Make row look clickable
+              >
                 <TableCell>
                   <Avatar>
                     <AvatarImage src={company.logo} alt={company.name} />
@@ -69,7 +77,10 @@ const CompaniesTable = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-32">
                       <div
-                        onClick={() => navigate(`/admin/companies/${company._id}`)}
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent row click
+                          navigate(`/admin/companies/${company._id}/edit`); // Navigate to edit page
+                        }}
                         className="flex items-center gap-2 w-fit cursor-pointer"
                       >
                         <Edit2 className="w-4" />
@@ -92,3 +103,4 @@ const CompaniesTable = () => {
 };
 
 export default CompaniesTable;
+  
