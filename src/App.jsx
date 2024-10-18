@@ -15,11 +15,12 @@ import Profile from "./components/Profile";
 import Companies from "./components/admin/Companies";
 import JobDescription from "./components/JobDescription";
 import AllAdminJob from "./components/admin/allAdminJob";
+import AdminJobDescription from "./components/admin/AdminJobDescription";
+
 const App = () => {
   return (
     <Router>
       <Navbar />
-
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/verify-otp-reset-password" element={<ResetPassword />} />
         <Route path="/job" element={<Jobs />} />
         <Route path="/description/:jobId" element={<JobDescription />} />
+        
         <Route
           path="/admin/companies"
           element={
@@ -37,6 +39,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        
         <Route
           path="/admin/job"
           element={
@@ -45,6 +48,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        
         <Route
           path="/admin/jobPost"
           element={
@@ -53,6 +57,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        
         <Route
           path="/admin/companies/create"
           element={
@@ -61,11 +66,21 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        
         <Route
           path="/admin/PostJob/:companyId"
           element={
             <ProtectedRoute>
               <PostJob />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/admin/job/description/:jobId" 
+          element={
+            <ProtectedRoute>
+              <AdminJobDescription /> 
             </ProtectedRoute>
           }
         />
