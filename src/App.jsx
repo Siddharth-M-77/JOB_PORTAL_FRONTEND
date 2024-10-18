@@ -16,6 +16,7 @@ import Companies from "./components/admin/Companies";
 import JobDescription from "./components/JobDescription";
 import AllAdminJob from "./components/admin/allAdminJob";
 import AdminJobDescription from "./components/admin/AdminJobDescription";
+import CompanyUpdate from "./components/admin/CompanyUpdate"
 
 const App = () => {
   return (
@@ -81,6 +82,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <AdminJobDescription /> 
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/companies/:id/edit" 
+          element={
+            <ProtectedRoute>
+              <CompanyUpdate /> 
             </ProtectedRoute>
           }
         />

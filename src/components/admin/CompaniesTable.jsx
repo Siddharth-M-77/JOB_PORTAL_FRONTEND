@@ -59,7 +59,7 @@ const CompaniesTable = () => {
             filteredCompanies.map((company) => (
               <TableRow
                 key={company._id}
-                onClick={() => handleCompanyClick(company._id)} // Navigate on row click
+                 // Navigate on row click
                 className="cursor-pointer" // Make row look clickable
               >
                 <TableCell>
@@ -67,7 +67,7 @@ const CompaniesTable = () => {
                     <AvatarImage src={company.logo} alt={company.name} />
                   </Avatar>
                 </TableCell>
-                <TableCell>{company.name}</TableCell>
+                <TableCell onClick={() => handleCompanyClick(company._id)} className="hover:text-red-700 hover:underline">{company.name}</TableCell>
                 <TableCell>{new Date(company.createdAt).toLocaleDateString()}</TableCell>
                 {/* Converts ISO string to a more readable date format */}
                 <TableCell className="text-right cursor-pointer">
