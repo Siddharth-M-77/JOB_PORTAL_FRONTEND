@@ -13,13 +13,9 @@ const CompanyUpdate = () => {
   const isHaveResume = true;
   const navigate = useNavigate();
   const params = useParams();
-  console.log(params.id);
 
 
   const { singleCompany } = useSelector((store) => store.company);
-  console.log(singleCompany.name)
-  const { user } = useSelector((store) => store.user);
-//   console.log(singleCompany)
   const goBack = () => {
     navigate(-1);
   };
@@ -32,7 +28,7 @@ const CompanyUpdate = () => {
       >
         <ArrowLeft /> Go Back
       </Button>
-      <div className="max-w-7xl mx-auto bg-white h-[65vh] flex  flex-col justify-start rounded-lg my-5 p-8">
+      <div className="max-w-4xl mx-auto bg-white h-[60vh] flex  flex-col justify-start rounded-lg my-5 p-8">
         <div className="bg-white shadow-lg p-6">
           <div className="flex  gap-8 justify-between p-6">
             <div className="flex gap-6 items-center">
@@ -62,36 +58,11 @@ const CompanyUpdate = () => {
             </div>
             <div className="flex gap-2 items-center justify-start">
               <Phone />
-              <span>{user?.phoneNumber}</span>
+              <span>{singleCompany?.phoneNumber}</span>
             </div>
           </div>
-          <div>
-            <h1 className="px-6">Skills</h1>
-
-            {user?.profile?.skills?.length > 0 ? (
-              user.profile.skills.map((item, index) => (
-                <Badge className="my-2 mr-2" key={index}>
-                  <div className="flex p-2 flex-wrap">{item}</div>
-                </Badge>
-              ))
-            ) : (
-              <span className="px-6">No skills available</span>
-            )}
-          </div>
-          <div className="grid w-full max-w-sm items-center px-6">
-            <Label className="text-xl font-semibold">Resume</Label>
-            {isHaveResume ? (
-              <a
-                target="_blank"
-                href=""
-                className="text-blue-600 hover:underline cursor-pointer"
-              >
-                Resume
-              </a>
-            ) : (
-              "NA"
-            )}
-          </div>
+        
+        
         </div>
 
         <div className="flex flex-col gap-3"></div>

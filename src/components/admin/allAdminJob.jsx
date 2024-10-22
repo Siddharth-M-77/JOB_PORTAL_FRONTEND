@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
-import { Bookmark } from "lucide-react";
+import { Backpack, BackpackIcon, Bookmark, StepBackIcon } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import useGetAllAdminJobs from "@/hooks/usegetAllAdminJobs";
@@ -23,14 +23,27 @@ const AllAdminJob = () => {
   const handleClick = (id) => {
     navigate(`/admin/job/description/${id}`);
   };
+  const handleJobClick = () => {
+    navigate(`/admin/JobPost`);
+  };
+  const goBack=()=>{
+    navigate(-1)
+  }
 
   return (
-    <div className="container mx-auto max-w-screen-2xl grid grid-cols-1 md:grid-cols-3 items-center justify-center p-16">
+    <>
+    <div className="flex items-center justify-between  mt-4 p-5">
+      
+    <button onClick={()=>goBack()} className="text-sm font-['Roboto'] flex items-center justify-center ml-6 font-bold px-5 py-2 hover:bg-gray-600 hover:-translate-y-1 transition-all bg-[#7209B7] text-white  rounded-lg "> <StepBackIcon/>  Go Back</button>
+    <button onClick={()=>handleJobClick()} className="mr-12 text-sm font-['Roboto'] font-bold px-5 py-2 hover:bg-gray-600 hover:-translate-y-1 transition-all bg-[#7209B7] text-white  rounded-lg ">Post Job👋</button>
+    </div>
+    
+    <div className="container mx-auto max-w-screen-xl  grid grid-cols-1 gap-20 md:gap-20 lg:gap-10 flex-wrap md:grid-cols-2 lg:grid-cols-3 overflow-hidden ">
     {allAdminJobs.length > 0 ? (
       allAdminJobs.map((job) => (
         <div
           key={job._id}
-          className="p-5 rounded-md shadow-xl min-h-72 w-full md:w-96 mt-10 flex flex-col gap-3 bg-white border border-gray-100"
+          className="p-5 rounded-md shadow-xl min-h-72 w-full md:w-96 mt-10 hover:scale-105 transition-all  flex flex-col gap-3 bg-white border border-gray-100"
         >
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-500">
@@ -96,7 +109,7 @@ const AllAdminJob = () => {
         </p>
       </div>
     )}
-  </div>
+  </div></>
   
   );
 };

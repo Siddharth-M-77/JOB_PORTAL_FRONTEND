@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import {
   Popover,
   PopoverContent,
@@ -17,15 +17,14 @@ import { USER_API_END_POINT } from "@/utils/constant";
 
 const Navbar = () => {
   const { user } = useSelector((store) => store.user);
+  
+  // Only access role if the user is not null
   const role = user ? (user.role === "recruiter" ? "/admin/job" : "/job") : "/";
-
+  
   const dispatch = useDispatch();
-
   const [isOpen, setIsOpen] = useState(false);
-
   const navigate = useNavigate();
 
-  // Logout function
   // Logout function
   const handleLogout = async () => {
     try {
@@ -50,10 +49,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           {/* Logo Section */}
-          <div
-            className="flex items-center jusc-
-          "
-          >
+          <div className="flex items-center">
             <h1 className="text-3xl font-extrabold flex">
               Job <span className="text-rose-700">HUB</span>
             </h1>
@@ -61,12 +57,15 @@ const Navbar = () => {
 
           {/* Menu for larger screens */}
           <div className="hidden md:flex space-x-8 items-center">
-            <Link
-              to="/"
-              className="text-gray-800 hover:text-rose-700 font-medium"
-            >
-              Home
-            </Link>
+            {/* Only show Home if the user is not a recruiter */}
+            {user && user.role !== "recruiter" && (
+              <Link
+                to="/"
+                className="text-gray-800 hover:text-rose-700 font-medium"
+              >
+                Home
+              </Link>
+            )}
             <Link
               to={role}
               className="text-gray-800 hover:text-rose-700 font-medium"
@@ -188,14 +187,16 @@ const Navbar = () => {
       {/* Mobile Menu */}
       <div className={`${isOpen ? "block" : "hidden"} md:hidden`}>
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          {user && user.role !== "recruiter" && (
+            <Link
+              to="/"
+              className="block text-gray-800 hover:text-rose-700 font-medium py-2"
+            >
+              Home
+            </Link>
+          )}
           <Link
-            to="/"
-            className="block text-gray-800 hover:text-rose-700 font-medium py-2"
-          >
-            Home
-          </Link>
-          <Link
-            to="/job"
+            to={role}
             className="block text-gray-800 hover:text-rose-700 font-medium py-2"
           >
             Job
