@@ -18,8 +18,10 @@ import useGetAllCompanies from "@/hooks/getAllCompanies";
 const CompaniesTable = () => {
   const navigate = useNavigate(); 
   const { companies = [], searchCompanyByText } = useSelector(
-    (store) => store.company
-  );
+    (store) => store.company);
+
+    console.log(companies)
+
 
   const [filteredCompanies, setFilteredCompanies] = useState(companies);
 
