@@ -17,6 +17,7 @@ import JobDescription from "./components/JobDescription";
 import AllAdminJob from "./components/admin/allAdminJob";
 import AdminJobDescription from "./components/admin/AdminJobDescription";
 import CompanyUpdate from "./components/admin/CompanyUpdate"
+import Applicants from "./components/admin/Applicants";
 
 const App = () => {
   return (
@@ -90,6 +91,14 @@ const App = () => {
           element={
             <ProtectedRoute>
               <CompanyUpdate /> 
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/jobs/:id/applicants" 
+          element={
+            <ProtectedRoute>
+              <Applicants /> 
             </ProtectedRoute>
           }
         />

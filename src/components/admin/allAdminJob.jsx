@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Button } from "../ui/button";
-import { Backpack, BackpackIcon, Bookmark, StepBackIcon } from "lucide-react";
+import { Backpack, BackpackIcon, Bookmark, Eye, StepBackIcon } from "lucide-react";
 import { Avatar, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
 import useGetAllAdminJobs from "@/hooks/usegetAllAdminJobs";
@@ -76,7 +76,7 @@ const AllAdminJob = () => {
           </div>
           <div className="flex items-center justify-between gap-2 mt-4">
             <Badge className={"text-blue-700 font-bold"} variant="ghost">
-              {job.position} - Position
+              {job.position}  Position
             </Badge>
   
             <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
@@ -97,7 +97,7 @@ const AllAdminJob = () => {
             <Button variant="outline" onClick={() => handleClick(job._id)}>
               Details
             </Button>
-            <Button className="bg-[#7209b7]">Save For Later</Button>
+            <Button onClick={()=>navigate(`/admin/jobs/${job._id}/applicants`)} className="bg-blue-600 hover:bg-blue-700"><Eye/> View Applicants </Button>
           </div>
         </div>
       ))

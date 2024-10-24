@@ -96,7 +96,7 @@ const AdminJobDescription = () => {
               Total Applicants: {singleJob.applications.length}
             </p>
             <p className="text-sm mb-2 font-semibold mt-2">
-              Posted Date:{" "}
+              Posted Date:
               {daysAgo(singleJob?.createdAt) === 0
                 ? "Today"
                 : `${daysAgo(singleJob?.createdAt)} days ago`}
